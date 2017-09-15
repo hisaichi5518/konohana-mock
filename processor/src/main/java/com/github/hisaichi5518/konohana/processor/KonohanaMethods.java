@@ -28,7 +28,7 @@ class KonohanaMethods {
                 .build());
 
         konohanaContext.storeContexts.forEach(storeContext -> {
-            methods.add(MethodSpec.methodBuilder("get" + storeContext.getClassName().simpleName())
+            methods.add(MethodSpec.methodBuilder("storeOf" + storeContext.getClassName().simpleName())
                     .addModifiers(Modifier.PUBLIC)
                     .returns(storeContext.getStoreClassName())
                     .addStatement("return new $T(applicationContext)", storeContext.getStoreClassName())
