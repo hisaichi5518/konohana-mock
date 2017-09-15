@@ -46,8 +46,8 @@ class StoreMethods {
         keys().forEach(keyContext -> codeBlockBuilder.addStatement("entity.$L = get$L()", keyContext.element.getSimpleName(), keyContext.getCapitalizedName()));
         codeBlockBuilder.addStatement("emitter.onNext(entity)");
 
-        //@formatter:off
         // Create keyChanges method
+        //@formatter:off
         methods.add(methodBuilder("keyChanges")
                 .addModifiers(Modifier.PUBLIC)
                 .returns(ParameterizedTypeName.get(ClassName.get(Observable.class), storeContext.getClassName()))
@@ -71,7 +71,6 @@ class StoreMethods {
                 .endControlFlow(")")
                 .build());
         //@formatter:on
-
 
         // Create Getters, Setters and more
         keys().forEach(keyContext -> {

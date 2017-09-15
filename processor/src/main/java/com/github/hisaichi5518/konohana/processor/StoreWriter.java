@@ -8,15 +8,14 @@ import com.squareup.javapoet.TypeSpec;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.Modifier;
-import javax.lang.model.element.TypeElement;
 
 class StoreWriter {
     private final ProcessingEnvironment env;
     private final StoreContext storeContext;
 
-    StoreWriter(ProcessingEnvironment env, TypeElement element) {
+    StoreWriter(ProcessingEnvironment env, StoreContext storeContext) {
         this.env = env;
-        this.storeContext = new StoreContext(element);
+        this.storeContext = storeContext;
     }
 
     void write() throws Exception {
@@ -25,7 +24,7 @@ class StoreWriter {
                 .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
                 .build();
 
-        TypeSpec typeSpec = TypeSpec.classBuilder(storeContext.element.getSimpleName().toString() + "_Store")
+        TypeSpec typeSpec = TypeSpec.classBuilder(storeContext.getStoreClassName())
                 .addField(prefsField)
                 .addMethods(new StoreMethods(storeContext).build())
                 .build();

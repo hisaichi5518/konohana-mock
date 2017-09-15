@@ -33,4 +33,8 @@ class StoreContext {
 
         return store.mode();
     }
+
+    ClassName getStoreClassName() {
+        return ClassName.get(getClassName().packageName(), getClassName().simpleName() + "_Store");
+    }
 }

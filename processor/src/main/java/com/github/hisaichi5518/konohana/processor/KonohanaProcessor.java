@@ -3,6 +3,8 @@ package com.github.hisaichi5518.konohana.processor;
 import com.github.hisaichi5518.konohana.annotation.Store;
 import com.google.auto.service.AutoService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -21,18 +23,32 @@ import javax.tools.Diagnostic;
 public class KonohanaProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+
+        List<StoreContext> storeContexts = new ArrayList<>();
         roundEnv.getElementsAnnotatedWith(Store.class)
                 .stream()
                 .filter(element -> element.getKind() == ElementKind.CLASS)
                 .map(element -> (TypeElement) element)
                 .forEach(element -> {
                     try {
-                        new StoreWriter(processingEnv, element).write();
+
+                        StoreContext storeContext = new StoreContext(element);
+                        new StoreWriter(processingEnv, storeContext).write();
+                        storeContexts.add(storeContext);
                     } catch (Exception e) {
+                        // FIXME: error element
                         processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, e.getMessage(), element);
                     }
                 });
 
-        return true;
+        if (storeContexts.size() != 0) {
+            try {
+                new KonohanaWriter(processingEnv, new KonohanaContext(storeContexts)).write();
+            } catch (Exception e) {
+                processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, e.getMessage());
+            }
+        }
+
+        return false;
     }
 }
