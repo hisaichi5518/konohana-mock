@@ -25,40 +25,41 @@ import io.reactivex.functions.Cancellable;
 import static com.squareup.javapoet.MethodSpec.methodBuilder;
 
 class StoreMethods {
-    private final StoreContext context;
-    private final List<MethodSpec> methods;
+    private final StoreContext storeContext;
 
-    StoreMethods(StoreContext context) {
-        this.context = context;
-        this.methods = new ArrayList<>();
+    StoreMethods(StoreContext storeContext) {
+        this.storeContext = storeContext;
     }
 
     List<MethodSpec> build() {
+        List<MethodSpec> methods = new ArrayList<>();
 
         // Create constructor
         methods.add(MethodSpec.constructorBuilder()
                 .addParameter(ParameterSpec.builder(Context.class, "context").build())
-                .addStatement("this.prefs = context.getSharedPreferences($S, $L)", context.getFileName(), context.getMode())
+                .addStatement("this.prefs = context.getSharedPreferences($S, $L)", storeContext.getFileName(), storeContext.getMode())
                 .build());
 
         CodeBlock.Builder codeBlockBuilder = CodeBlock.builder()
-                .addStatement("$T entity = new $T()", context.getClassName(), context.getClassName());
+                .addStatement("$T entity = new $T()", storeContext.getClassName(), storeContext.getClassName());
 
         keys().forEach(keyContext -> codeBlockBuilder.addStatement("entity.$L = get$L()", keyContext.element.getSimpleName(), keyContext.getCapitalizedName()));
         codeBlockBuilder.addStatement("emitter.onNext(entity)");
 
-        // Create observable method
-        methods.add(methodBuilder("observable")
-                .returns(ParameterizedTypeName.get(ClassName.get(Observable.class), context.getClassName()))
-                .beginControlFlow("return $T.create(new $T<$T>()", Observable.class, ObservableOnSubscribe.class, context.getClassName())
+        //@formatter:off
+        // Create keyChanges method
+        methods.add(methodBuilder("keyChanges")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(ParameterizedTypeName.get(ClassName.get(Observable.class), storeContext.getClassName()))
+                .beginControlFlow("return $T.create(new $T<$T>()", Observable.class, ObservableOnSubscribe.class, storeContext.getClassName())
                     .addCode("@$T\n", Override.class)
-                    .beginControlFlow("public void subscribe(final $T<$T> emitter) throws $T", ObservableEmitter.class, context.getClassName(), Exception.class)
+                    .beginControlFlow("public void subscribe(final $T<$T> emitter) throws $T", ObservableEmitter.class, storeContext.getClassName(), Exception.class)
                         .beginControlFlow("final $T listener = new $T()", SharedPreferences.OnSharedPreferenceChangeListener.class, SharedPreferences.OnSharedPreferenceChangeListener.class)
                             .addCode("@$T\n", Override.class)
                             .beginControlFlow("public void onSharedPreferenceChanged($T preferences, $T key)", SharedPreferences.class, String.class)
                             .addCode(codeBlockBuilder.build())
                             .endControlFlow()
-                        .endControlFlow(";")
+                        .endControlFlow("")
                         .beginControlFlow("emitter.setCancellable(new $T()", Cancellable.class)
                             .addCode("@$T\n", Override.class)
                             .beginControlFlow("public void cancel() throws $T", Exception.class)
@@ -69,6 +70,7 @@ class StoreMethods {
                     .endControlFlow()
                 .endControlFlow(")")
                 .build());
+        //@formatter:on
 
 
         // Create Getters, Setters and more
@@ -137,7 +139,7 @@ class StoreMethods {
     }
 
     private Stream<KeyContext> keys() {
-        return context.element.getEnclosedElements()
+        return storeContext.element.getEnclosedElements()
                 .stream()
                 .filter(element -> element.getAnnotation(Key.class) != null)
                 .map(element -> new KeyContext((VariableElement) element));
