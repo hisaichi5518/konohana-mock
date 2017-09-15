@@ -21,7 +21,6 @@ class StoreWriter {
 
     void write() throws Exception {
 
-        // Create fields
         FieldSpec prefsField = FieldSpec.builder(SharedPreferences.class, "prefs")
                 .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
                 .build();
