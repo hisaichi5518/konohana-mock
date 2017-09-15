@@ -86,6 +86,10 @@ class StoreMethods {
                 .addStatement("prefs.edit().clear().apply()")
                 .build());
 
+
+        // TODO: getAll method
+        // TODO: setAll method
+
         return methods;
     }
 
