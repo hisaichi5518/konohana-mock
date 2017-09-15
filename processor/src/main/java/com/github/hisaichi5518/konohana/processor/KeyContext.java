@@ -40,24 +40,24 @@ public class KeyContext {
     void injectForGetter(MethodSpec.Builder builder) {
         TypeName methodType = ClassName.get(element.asType());
         if (methodType.equals(TypeName.BOOLEAN)) {
-            builder.addParameter(ParameterSpec.builder(boolean.class, "d").build())
-                    .addStatement("return prefs.getBoolean($S, d)", getRealKeyName());
+            builder.addParameter(ParameterSpec.builder(boolean.class, "defaultValue").build())
+                    .addStatement("return prefs.getBoolean($S, defaultValue)", getRealKeyName());
 
         } else if (methodType.equals(TypeName.INT)) {
-            builder.addParameter(ParameterSpec.builder(int.class, "d").build())
-                    .addStatement("return prefs.getInt($S, d)", getRealKeyName());
+            builder.addParameter(ParameterSpec.builder(int.class, "defaultValue").build())
+                    .addStatement("return prefs.getInt($S, defaultValue)", getRealKeyName());
 
         } else if (methodType.equals(TypeName.FLOAT)) {
-            builder.addParameter(ParameterSpec.builder(float.class, "d").build())
-                    .addStatement("return prefs.getFloat($S, d)", getRealKeyName());
+            builder.addParameter(ParameterSpec.builder(float.class, "defaultValue").build())
+                    .addStatement("return prefs.getFloat($S, defaultValue)", getRealKeyName());
 
         } else if (methodType.equals(TypeName.LONG)) {
-            builder.addParameter(ParameterSpec.builder(long.class, "d").build())
-                    .addStatement("return prefs.getLong($S, d)", getRealKeyName());
+            builder.addParameter(ParameterSpec.builder(long.class, "defaultValue").build())
+                    .addStatement("return prefs.getLong($S, defaultValue)", getRealKeyName());
 
         } else if (methodType.equals(ClassName.get(String.class))) {
-            builder.addParameter(ParameterSpec.builder(String.class, "d").build())
-                    .addStatement("return prefs.getString($S, d)", getRealKeyName());
+            builder.addParameter(ParameterSpec.builder(String.class, "defaultValue").build())
+                    .addStatement("return prefs.getString($S, defaultValue)", getRealKeyName());
 
         } else {
             throw new RuntimeException("対応してません");
