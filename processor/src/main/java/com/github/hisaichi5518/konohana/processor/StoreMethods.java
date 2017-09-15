@@ -46,9 +46,9 @@ class StoreMethods {
         keys().forEach(keyContext -> codeBlockBuilder.addStatement("entity.$L = get$L()", keyContext.element.getSimpleName(), keyContext.getCapitalizedName()));
         codeBlockBuilder.addStatement("emitter.onNext(entity)");
 
-        // Create keyChanges method
+        // Create changes method
         //@formatter:off
-        methods.add(methodBuilder("keyChanges")
+        methods.add(methodBuilder("changes")
                 .addModifiers(Modifier.PUBLIC)
                 .returns(ParameterizedTypeName.get(ClassName.get(Observable.class), storeContext.getClassName()))
                 .beginControlFlow("return $T.create(new $T<$T>()", Observable.class, ObservableOnSubscribe.class, storeContext.getClassName())
