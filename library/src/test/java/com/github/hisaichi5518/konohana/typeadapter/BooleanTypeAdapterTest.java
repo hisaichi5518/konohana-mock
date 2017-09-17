@@ -12,8 +12,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static org.assertj.core.api.Java6Assertions.assertThat;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class)
@@ -30,19 +29,19 @@ public class BooleanTypeAdapterTest {
 
     @Test
     public void get_WithDefault() throws Exception {
-        assertFalse(adapter.get(prefs, "key", false));
+        assertThat(adapter.get(prefs, "key", false)).isFalse();
 
         adapter.set(prefs, "key", true);
 
-        assertTrue(adapter.get(prefs, "key", false));
+        assertThat(adapter.get(prefs, "key", false)).isTrue();
     }
 
     @Test
     public void get_WithoutDefault() throws Exception {
-        assertFalse(adapter.get(prefs, "key"));
+        assertThat(adapter.get(prefs, "key")).isFalse();
 
         adapter.set(prefs, "key", true);
 
-        assertTrue(adapter.get(prefs, "key"));
+        assertThat(adapter.get(prefs, "key")).isTrue();
     }
 }
