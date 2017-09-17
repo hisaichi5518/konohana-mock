@@ -47,7 +47,7 @@ class KeyDefinition {
         return "has" + getCapitalizedName();
     }
 
-    TypeName getTypeAdapterClassName() {
+    TypeName getTypeAdapterTypeName() {
         TypeAdapterDefinition definition = context.getTypeAdapterDefinition(getFieldClassName());
         if (definition == null) {
             throw new RuntimeException("TypeAdapterが見つかりませんでした");
