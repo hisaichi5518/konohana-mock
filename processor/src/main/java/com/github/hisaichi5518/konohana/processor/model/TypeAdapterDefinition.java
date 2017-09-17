@@ -16,7 +16,7 @@ class TypeAdapterDefinition {
             create(TypeName.FLOAT, KonohanaTypes.FloatTypeAdapter),
             create(TypeName.LONG, KonohanaTypes.FloatTypeAdapter),
 
-            create(ClassName.get(String.class), KonohanaTypes.StringTypeAdapter),
+            create(JavaTypes.String, KonohanaTypes.StringTypeAdapter),
             create(JavaTypes.getSet(JavaTypes.String), KonohanaTypes.StringSetTypeAdapter)
     };
 
