@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.github.hisaichi5518.konohana.processor.model.StoreDefinition;
 import com.github.hisaichi5518.konohana.processor.model.StoreMethodsBuilder;
 import com.github.hisaichi5518.konohana.processor.types.AndroidTypes;
+import com.github.hisaichi5518.konohana.processor.types.Annotations;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -56,9 +57,8 @@ public class StoreWriter {
     private List<MethodSpec> buildConstructors() {
         List<MethodSpec> methodSpecs = new ArrayList<>();
 
-
         methodSpecs.add(MethodSpec.constructorBuilder()
-                .addParameter(ParameterSpec.builder(AndroidTypes.Context, "context").build())
+                .addParameter(ParameterSpec.builder(AndroidTypes.Context, "context").addAnnotation(Annotations.NonNull).build())
                 .addStatement("this.prefs = context.getSharedPreferences($S, $L)", storeDefinition.getPrefsFileName(), storeDefinition.getPrefsMode())
                 .build());
 

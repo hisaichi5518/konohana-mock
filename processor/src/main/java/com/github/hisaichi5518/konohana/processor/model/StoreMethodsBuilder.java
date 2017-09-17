@@ -3,6 +3,7 @@ package com.github.hisaichi5518.konohana.processor.model;
 import android.support.annotation.NonNull;
 
 import com.github.hisaichi5518.konohana.processor.types.AndroidTypes;
+import com.github.hisaichi5518.konohana.processor.types.Annotations;
 import com.github.hisaichi5518.konohana.processor.types.RxJavaTypes;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
@@ -36,6 +37,7 @@ public class StoreMethodsBuilder {
         // Create changes method
         //@formatter:off
         methods.add(MethodSpec.methodBuilder("changes")
+                .addAnnotation(Annotations.NonNull)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(ParameterizedTypeName.get(RxJavaTypes.Observable, storeDefinition.getClassName()))
                 .beginControlFlow("return $T.create(new $T<$T>()", RxJavaTypes.Observable, RxJavaTypes.ObservableOnSubscribe, storeDefinition.getClassName())
@@ -104,7 +106,7 @@ public class StoreMethodsBuilder {
     private MethodSpec buildSetterSpec(@NonNull KeyDefinition keyDefinition) {
         MethodSpec.Builder builder = MethodSpec.methodBuilder(keyDefinition.getSetterName())
                 .addModifiers(Modifier.PUBLIC)
-                .addParameter(ParameterSpec.builder(keyDefinition.getFieldClassName(), "value").build())
+                .addParameter(ParameterSpec.builder(keyDefinition.getFieldClassName(), "value").addAnnotation(Annotations.NonNull).build())
                 .addStatement("new $T().set(prefs, $S, value)", keyDefinition.getTypeAdapterTypeName(), keyDefinition.getPrefsKeyName()); // TODO
 
         return builder.build();
@@ -116,7 +118,8 @@ public class StoreMethodsBuilder {
         MethodSpec.Builder builder = MethodSpec.methodBuilder(keyDefinition.getGetterName())
                 .returns(keyDefinition.getFieldClassName())
                 .addModifiers(Modifier.PUBLIC)
-                .addParameter(ParameterSpec.builder(keyDefinition.getFieldClassName(), "defaultValue").build())
+                .addAnnotation(Annotations.NonNull)
+                .addParameter(ParameterSpec.builder(keyDefinition.getFieldClassName(), "defaultValue").addAnnotation(Annotations.NonNull).build())
                 .addStatement("return new $T().get(prefs, $S, defaultValue)", keyDefinition.getTypeAdapterTypeName(), keyDefinition.getPrefsKeyName()); // TODO
 
         return builder.build();
@@ -128,6 +131,7 @@ public class StoreMethodsBuilder {
         MethodSpec.Builder builder = MethodSpec.methodBuilder(keyDefinition.getGetterName())
                 .returns(keyDefinition.getFieldClassName())
                 .addModifiers(Modifier.PUBLIC)
+                .addAnnotation(Annotations.NonNull)
                 .addStatement("return new $T().get(prefs, $S)", keyDefinition.getTypeAdapterTypeName(), keyDefinition.getPrefsKeyName()); // TODO
 
         return builder.build();
