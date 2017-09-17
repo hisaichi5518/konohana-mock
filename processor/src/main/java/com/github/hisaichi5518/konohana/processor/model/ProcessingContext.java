@@ -1,5 +1,8 @@
 package com.github.hisaichi5518.konohana.processor.model;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.github.hisaichi5518.konohana.annotation.Store;
 import com.github.hisaichi5518.konohana.annotation.TypeAdapter;
 import com.squareup.javapoet.TypeName;
@@ -18,11 +21,12 @@ public class ProcessingContext {
     private final ProcessingEnvironment processingEnv;
     private final RoundEnvironment roundEnv;
 
-    public ProcessingContext(ProcessingEnvironment processingEnv, RoundEnvironment roundEnv) {
+    public ProcessingContext(@NonNull ProcessingEnvironment processingEnv, @NonNull RoundEnvironment roundEnv) {
         this.processingEnv = processingEnv;
         this.roundEnv = roundEnv;
     }
 
+    @NonNull
     public Stream<StoreDefinition> storeDefinitionStream() {
         return roundEnv.getElementsAnnotatedWith(Store.class)
                 .stream()
@@ -30,26 +34,30 @@ public class ProcessingContext {
                 .map(element -> new StoreDefinition(this, (TypeElement) element));
     }
 
+    @NonNull
     public Filer getFiler() {
         return processingEnv.getFiler();
     }
 
-    public void error(String message, TypeElement element) {
+    public void error(@NonNull String message, @NonNull TypeElement element) {
         processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, message, element);
     }
 
-    public void error(String message) {
+    public void error(@NonNull String message) {
         processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, message);
     }
 
+    @Nullable
     public String getPackageName() {
+        // FIXME: throw Exception if package is null
         return storeDefinitionStream()
                 .map(StoreDefinition::getPackageName)
                 .findFirst()
                 .orElse(null);
     }
 
-    TypeAdapterDefinition getTypeAdapterDefinition(TypeName typeName) {
+    @Nullable
+    TypeAdapterDefinition getTypeAdapterDefinition(@NonNull TypeName typeName) {
         Stream<TypeAdapterDefinition> typeAdapterDefinitionStream = roundEnv.getElementsAnnotatedWith(TypeAdapter.class)
                 .stream()
                 .filter(element -> element.getKind() == ElementKind.CLASS)

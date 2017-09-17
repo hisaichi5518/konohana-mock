@@ -1,5 +1,7 @@
 package com.github.hisaichi5518.konohana.processor.writer;
 
+import android.support.annotation.NonNull;
+
 import com.github.hisaichi5518.konohana.processor.model.StoreDefinition;
 import com.github.hisaichi5518.konohana.processor.model.StoreMethodsBuilder;
 import com.github.hisaichi5518.konohana.processor.types.AndroidTypes;
@@ -18,7 +20,7 @@ import javax.lang.model.element.Modifier;
 public class StoreWriter {
     private final StoreDefinition storeDefinition;
 
-    public StoreWriter(StoreDefinition storeDefinition) {
+    public StoreWriter(@NonNull StoreDefinition storeDefinition) {
         this.storeDefinition = storeDefinition;
     }
 
@@ -39,6 +41,7 @@ public class StoreWriter {
         }
     }
 
+    @NonNull
     private List<FieldSpec> buildFields() {
         List<FieldSpec> fieldSpecs = new ArrayList<>();
 
@@ -49,6 +52,7 @@ public class StoreWriter {
         return fieldSpecs;
     }
 
+    @NonNull
     private List<MethodSpec> buildConstructors() {
         List<MethodSpec> methodSpecs = new ArrayList<>();
 

@@ -1,5 +1,7 @@
 package com.github.hisaichi5518.konohana.processor.model;
 
+import android.support.annotation.NonNull;
+
 import com.github.hisaichi5518.konohana.annotation.Key;
 import com.github.hisaichi5518.konohana.annotation.Store;
 import com.squareup.javapoet.ClassName;
@@ -13,19 +15,22 @@ public class StoreDefinition {
     public final ProcessingContext context;
     public final TypeElement element;
 
-    StoreDefinition(ProcessingContext context, TypeElement element) {
+    StoreDefinition(@NonNull ProcessingContext context, @NonNull TypeElement element) {
         this.context = context;
         this.element = element;
     }
 
+    @NonNull
     public ClassName getClassName() {
         return ClassName.get(element);
     }
 
-    public String getPackageName() {
+    @NonNull
+    String getPackageName() {
         return getClassName().packageName();
     }
 
+    @NonNull
     public String getPrefsFileName() {
         Store store = element.getAnnotation(Store.class);
         if (store.name().isEmpty()) {
@@ -44,10 +49,12 @@ public class StoreDefinition {
         return store.mode();
     }
 
+    @NonNull
     public ClassName getStoreClassName() {
         return ClassName.get(getClassName().packageName(), getClassName().simpleName() + "_Store");
     }
 
+    @NonNull
     Stream<KeyDefinition> keyDefinitionStream() {
         return element.getEnclosedElements()
                 .stream()
