@@ -10,9 +10,14 @@ public class KonohanaTypes {
 
     public static final ClassName IntegerTypeAdapter = ClassName.get(TYPE_ADAPTER_PACKAGE, "IntegerTypeAdapter");
 
+    public static final ClassName FloatTypeAdapter = ClassName.get(TYPE_ADAPTER_PACKAGE, "FloatTypeAdapter");
+
+    public static final ClassName LongTypeAdapter = ClassName.get(TYPE_ADAPTER_PACKAGE, "LongTypeAdapter");
+
     public static final ClassName BooleanTypeAdapter = ClassName.get(TYPE_ADAPTER_PACKAGE, "BooleanTypeAdapter");
 
     public static final ClassName StringTypeAdapter = ClassName.get(TYPE_ADAPTER_PACKAGE, "StringTypeAdapter");
 
     public static final ClassName StringSetTypeAdapter = ClassName.get(TYPE_ADAPTER_PACKAGE, "StringSetTypeAdapter");
+
 }
