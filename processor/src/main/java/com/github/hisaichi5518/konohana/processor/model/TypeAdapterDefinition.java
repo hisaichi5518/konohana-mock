@@ -13,6 +13,7 @@ class TypeAdapterDefinition {
     static final TypeAdapterDefinition[] BUILD_IN = {
             create(TypeName.INT, KonohanaTypes.IntegerTypeAdapter),
             create(TypeName.BOOLEAN, KonohanaTypes.BooleanTypeAdapter),
+            create(TypeName.FLOAT, KonohanaTypes.FloatTypeAdapter),
 
             create(ClassName.get(String.class), KonohanaTypes.StringTypeAdapter),
             create(JavaTypes.getSet(JavaTypes.String), KonohanaTypes.StringSetTypeAdapter)
