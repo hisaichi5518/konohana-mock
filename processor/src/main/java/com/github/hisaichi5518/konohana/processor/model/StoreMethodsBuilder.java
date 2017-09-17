@@ -1,5 +1,7 @@
 package com.github.hisaichi5518.konohana.processor.model;
 
+import android.support.annotation.NonNull;
+
 import com.github.hisaichi5518.konohana.processor.types.AndroidTypes;
 import com.github.hisaichi5518.konohana.processor.types.RxJavaTypes;
 import com.squareup.javapoet.CodeBlock;
@@ -16,10 +18,11 @@ public class StoreMethodsBuilder {
 
     private final StoreDefinition storeDefinition;
 
-    public StoreMethodsBuilder(StoreDefinition storeDefinition) {
+    public StoreMethodsBuilder(@NonNull StoreDefinition storeDefinition) {
         this.storeDefinition = storeDefinition;
     }
 
+    @NonNull
     public List<MethodSpec> build() {
         List<MethodSpec> methods = new ArrayList<>();
 
@@ -78,7 +81,8 @@ public class StoreMethodsBuilder {
         return methods;
     }
 
-    private MethodSpec buildRemoverSpec(KeyDefinition keyDefinition) {
+    @NonNull
+    private MethodSpec buildRemoverSpec(@NonNull KeyDefinition keyDefinition) {
         MethodSpec.Builder builder = MethodSpec.methodBuilder(keyDefinition.getRemoverName())
                 .addModifiers(Modifier.PUBLIC)
                 .addStatement("prefs.edit().remove($S).apply()", keyDefinition.getPrefsKeyName());
@@ -86,7 +90,8 @@ public class StoreMethodsBuilder {
         return builder.build();
     }
 
-    private MethodSpec buildHasMethodSpec(KeyDefinition keyDefinition) {
+    @NonNull
+    private MethodSpec buildHasMethodSpec(@NonNull KeyDefinition keyDefinition) {
         MethodSpec.Builder builder = MethodSpec.methodBuilder(keyDefinition.getContainsName())
                 .returns(boolean.class)
                 .addModifiers(Modifier.PUBLIC)
@@ -95,7 +100,8 @@ public class StoreMethodsBuilder {
         return builder.build();
     }
 
-    private MethodSpec buildSetterSpec(KeyDefinition keyDefinition) {
+    @NonNull
+    private MethodSpec buildSetterSpec(@NonNull KeyDefinition keyDefinition) {
         MethodSpec.Builder builder = MethodSpec.methodBuilder(keyDefinition.getSetterName())
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ParameterSpec.builder(keyDefinition.getFieldClassName(), "value").build())
@@ -104,7 +110,8 @@ public class StoreMethodsBuilder {
         return builder.build();
     }
 
-    private MethodSpec buildGetterSpec(KeyDefinition keyDefinition) {
+    @NonNull
+    private MethodSpec buildGetterSpec(@NonNull KeyDefinition keyDefinition) {
 
         MethodSpec.Builder builder = MethodSpec.methodBuilder(keyDefinition.getGetterName())
                 .returns(keyDefinition.getFieldClassName())
@@ -115,7 +122,8 @@ public class StoreMethodsBuilder {
         return builder.build();
     }
 
-    private MethodSpec buildGetterWithDefaultSpec(KeyDefinition keyDefinition) {
+    @NonNull
+    private MethodSpec buildGetterWithDefaultSpec(@NonNull KeyDefinition keyDefinition) {
 
         MethodSpec.Builder builder = MethodSpec.methodBuilder(keyDefinition.getGetterName())
                 .returns(keyDefinition.getFieldClassName())

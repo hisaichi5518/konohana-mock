@@ -1,5 +1,7 @@
 package com.github.hisaichi5518.konohana.processor.model;
 
+import android.support.annotation.NonNull;
+
 import com.github.hisaichi5518.konohana.annotation.TypeAdapter;
 import com.github.hisaichi5518.konohana.processor.types.JavaTypes;
 import com.github.hisaichi5518.konohana.processor.types.KonohanaTypes;
@@ -14,7 +16,7 @@ class TypeAdapterDefinition {
             create(TypeName.INT, KonohanaTypes.IntegerTypeAdapter),
             create(TypeName.BOOLEAN, KonohanaTypes.BooleanTypeAdapter),
             create(TypeName.FLOAT, KonohanaTypes.FloatTypeAdapter),
-            create(TypeName.LONG, KonohanaTypes.FloatTypeAdapter),
+            create(TypeName.LONG, KonohanaTypes.LongTypeAdapter),
 
             create(JavaTypes.String, KonohanaTypes.StringTypeAdapter),
             create(JavaTypes.getSet(JavaTypes.String), KonohanaTypes.StringSetTypeAdapter)
@@ -23,24 +25,27 @@ class TypeAdapterDefinition {
     private final TypeName target;
     private final TypeName typeAdapter;
 
-    private TypeAdapterDefinition(TypeName target, TypeName typeAdapter) {
+    private TypeAdapterDefinition(@NonNull TypeName target, @NonNull TypeName typeAdapter) {
         this.target = target;
         this.typeAdapter = typeAdapter;
     }
 
-    private static TypeAdapterDefinition create(TypeName target, TypeName typeAdapter) {
+    @NonNull
+    private static TypeAdapterDefinition create(@NonNull TypeName target, @NonNull TypeName typeAdapter) {
         return new TypeAdapterDefinition(target, typeAdapter);
     }
 
-    static TypeAdapterDefinition create(TypeElement typeElement) {
+    @NonNull
+    static TypeAdapterDefinition create(@NonNull TypeElement typeElement) {
         TypeAdapter adapter = typeElement.getAnnotation(TypeAdapter.class);
         return new TypeAdapterDefinition(ClassName.get(adapter.value()), ClassName.get(typeElement));
     }
 
-    boolean match(TypeName typeName) {
+    boolean match(@NonNull TypeName typeName) {
         return target.toString().equals(typeName.toString());
     }
 
+    @NonNull
     TypeName getTypeAdapter() {
         return typeAdapter;
     }

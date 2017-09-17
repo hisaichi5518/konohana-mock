@@ -1,5 +1,7 @@
 package com.github.hisaichi5518.konohana.processor.writer;
 
+import android.support.annotation.NonNull;
+
 import com.github.hisaichi5518.konohana.processor.model.ProcessingContext;
 import com.github.hisaichi5518.konohana.processor.types.AndroidTypes;
 import com.squareup.javapoet.FieldSpec;
@@ -17,7 +19,7 @@ import javax.lang.model.element.Modifier;
 public class KonohanaWriter {
     private final ProcessingContext context;
 
-    public KonohanaWriter(ProcessingContext context) {
+    public KonohanaWriter(@NonNull ProcessingContext context) {
         this.context = context;
     }
 
@@ -42,6 +44,7 @@ public class KonohanaWriter {
     }
 
 
+    @NonNull
     private List<FieldSpec> buildFieldSpecs() {
         List<FieldSpec> specs = new ArrayList<>();
 
@@ -52,6 +55,7 @@ public class KonohanaWriter {
         return specs;
     }
 
+    @NonNull
     private List<MethodSpec> buildConstructors() {
         List<MethodSpec> specs = new ArrayList<>();
 
@@ -64,6 +68,7 @@ public class KonohanaWriter {
         return specs;
     }
 
+    @NonNull
     private List<MethodSpec> buildMethods() {
         List<MethodSpec> specs = new ArrayList<>();
 
