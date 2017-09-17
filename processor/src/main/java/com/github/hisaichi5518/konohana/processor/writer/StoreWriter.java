@@ -1,10 +1,8 @@
 package com.github.hisaichi5518.konohana.processor.writer;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import com.github.hisaichi5518.konohana.processor.model.StoreDefinition;
 import com.github.hisaichi5518.konohana.processor.model.StoreMethodsBuilder;
+import com.github.hisaichi5518.konohana.processor.types.AndroidTypes;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -44,7 +42,7 @@ public class StoreWriter {
     private List<FieldSpec> buildFields() {
         List<FieldSpec> fieldSpecs = new ArrayList<>();
 
-        fieldSpecs.add(FieldSpec.builder(SharedPreferences.class, "prefs")
+        fieldSpecs.add(FieldSpec.builder(AndroidTypes.SharedPreferences, "prefs")
                 .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
                 .build());
 
@@ -56,7 +54,7 @@ public class StoreWriter {
 
 
         methodSpecs.add(MethodSpec.constructorBuilder()
-                .addParameter(ParameterSpec.builder(Context.class, "context").build())
+                .addParameter(ParameterSpec.builder(AndroidTypes.Context, "context").build())
                 .addStatement("this.prefs = context.getSharedPreferences($S, $L)", storeDefinition.getPrefsFileName(), storeDefinition.getPrefsMode())
                 .build());
 

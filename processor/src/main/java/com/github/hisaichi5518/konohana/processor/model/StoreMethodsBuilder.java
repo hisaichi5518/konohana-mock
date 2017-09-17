@@ -1,7 +1,6 @@
 package com.github.hisaichi5518.konohana.processor.model;
 
-import android.content.SharedPreferences;
-
+import com.github.hisaichi5518.konohana.processor.types.AndroidTypes;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
@@ -46,9 +45,9 @@ public class StoreMethodsBuilder {
                 .beginControlFlow("return $T.create(new $T<$T>()", Observable.class, ObservableOnSubscribe.class, storeDefinition.getClassName())
                     .addCode("@$T\n", Override.class)
                     .beginControlFlow("public void subscribe(final $T<$T> emitter) throws $T", ObservableEmitter.class, storeDefinition.getClassName(), Exception.class)
-                        .beginControlFlow("final $T listener = new $T()", SharedPreferences.OnSharedPreferenceChangeListener.class, SharedPreferences.OnSharedPreferenceChangeListener.class)
+                        .beginControlFlow("final $T listener = new $T()", AndroidTypes.OnSharedPreferenceChangeListener, AndroidTypes.OnSharedPreferenceChangeListener)
                             .addCode("@$T\n", Override.class)
-                            .beginControlFlow("public void onSharedPreferenceChanged($T preferences, $T key)", SharedPreferences.class, String.class)
+                            .beginControlFlow("public void onSharedPreferenceChanged($T preferences, $T key)", AndroidTypes.SharedPreferences, String.class)
                             .addCode(codeBlockBuilder.build())
                             .endControlFlow()
                         .endControlFlow("")
@@ -107,7 +106,7 @@ public class StoreMethodsBuilder {
         MethodSpec.Builder builder = MethodSpec.methodBuilder(keyDefinition.getSetterName())
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ParameterSpec.builder(keyDefinition.getFieldClassName(), "value").build())
-                .addStatement("new $T().set(prefs, $S, value)", keyDefinition.getTypeAdapterClassName(), keyDefinition.getPrefsKeyName()); // TODO
+                .addStatement("new $T().set(prefs, $S, value)", keyDefinition.getTypeAdapterTypeName(), keyDefinition.getPrefsKeyName()); // TODO
 
         return builder.build();
     }
@@ -118,7 +117,7 @@ public class StoreMethodsBuilder {
                 .returns(keyDefinition.getFieldClassName())
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ParameterSpec.builder(keyDefinition.getFieldClassName(), "defaultValue").build())
-                .addStatement("return new $T().get(prefs, $S, defaultValue)", keyDefinition.getTypeAdapterClassName(), keyDefinition.getPrefsKeyName()); // TODO
+                .addStatement("return new $T().get(prefs, $S, defaultValue)", keyDefinition.getTypeAdapterTypeName(), keyDefinition.getPrefsKeyName()); // TODO
 
         return builder.build();
     }
@@ -128,7 +127,7 @@ public class StoreMethodsBuilder {
         MethodSpec.Builder builder = MethodSpec.methodBuilder(keyDefinition.getGetterName())
                 .returns(keyDefinition.getFieldClassName())
                 .addModifiers(Modifier.PUBLIC)
-                .addStatement("return new $T().get(prefs, $S)", keyDefinition.getTypeAdapterClassName(), keyDefinition.getPrefsKeyName()); // TODO
+                .addStatement("return new $T().get(prefs, $S)", keyDefinition.getTypeAdapterTypeName(), keyDefinition.getPrefsKeyName()); // TODO
 
         return builder.build();
     }

@@ -1,8 +1,7 @@
 package com.github.hisaichi5518.konohana.processor.writer;
 
-import android.content.Context;
-
 import com.github.hisaichi5518.konohana.processor.model.ProcessingContext;
+import com.github.hisaichi5518.konohana.processor.types.AndroidTypes;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -46,7 +45,7 @@ public class KonohanaWriter {
     private List<FieldSpec> buildFieldSpecs() {
         List<FieldSpec> specs = new ArrayList<>();
 
-        specs.add(FieldSpec.builder(Context.class, "applicationContext")
+        specs.add(FieldSpec.builder(AndroidTypes.Context, "applicationContext")
                 .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
                 .build());
 
@@ -58,7 +57,7 @@ public class KonohanaWriter {
 
         specs.add(MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PUBLIC)
-                .addParameter(ParameterSpec.builder(Context.class, "context").build())
+                .addParameter(ParameterSpec.builder(AndroidTypes.Context, "context").build())
                 .addStatement("this.applicationContext = context.getApplicationContext()")
                 .build());
 
