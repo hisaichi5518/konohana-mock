@@ -1,7 +1,5 @@
 package com.github.hisaichi5518.konohana.annotation;
 
-import android.content.Context;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 
@@ -10,5 +8,5 @@ import java.lang.annotation.Target;
 public @interface Store {
     String name() default "";
 
-    int mode() default Context.MODE_PRIVATE;
+    int mode() default 0; // Context.MODE_PRIVATE
 }
