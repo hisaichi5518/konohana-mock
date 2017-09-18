@@ -7,10 +7,8 @@ import android.support.annotation.Nullable;
 import java.util.Set;
 
 public class StringSetPrefsAdapter {
-    @Nullable
-    public static Set<String> get(SharedPreferences prefs, @NonNull String key) {
-        return get(prefs, key, null);
-    }
+
+    public static final Set<String> DEFAULT_VALUE = null;
 
     public static Set<String> get(SharedPreferences prefs, @NonNull String key, @Nullable Set<String> defaultValue) {
         return prefs.getStringSet(key, defaultValue);

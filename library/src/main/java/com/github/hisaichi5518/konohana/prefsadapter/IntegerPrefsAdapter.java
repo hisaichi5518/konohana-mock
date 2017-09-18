@@ -4,9 +4,8 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
 public class IntegerPrefsAdapter {
-    public static int get(SharedPreferences prefs, @NonNull String key) {
-        return get(prefs, key, 0);
-    }
+
+    public static final int DEFAULT_VALUE = 0;
 
     public static int get(SharedPreferences prefs, @NonNull String key, int defaultValue) {
         return prefs.getInt(key, defaultValue);

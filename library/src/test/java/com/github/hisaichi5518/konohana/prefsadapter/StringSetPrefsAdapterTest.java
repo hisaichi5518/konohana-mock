@@ -39,17 +39,4 @@ public class StringSetPrefsAdapterTest {
 
         assertThat(StringSetPrefsAdapter.get(prefs, "key", null)).isEqualTo(strings);
     }
-
-    @Test
-    public void get_WithoutDefault() throws Exception {
-        assertThat(StringSetPrefsAdapter.get(prefs, "key")).isEqualTo(null);
-
-        Set<String> strings = new HashSet<>();
-        strings.add("hoge");
-
-        StringSetPrefsAdapter.set(prefs, "key", strings);
-
-        assertThat(StringSetPrefsAdapter.get(prefs, "key")).isEqualTo(strings);
-    }
-
 }

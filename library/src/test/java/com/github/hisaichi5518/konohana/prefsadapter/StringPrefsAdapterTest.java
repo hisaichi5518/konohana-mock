@@ -33,14 +33,4 @@ public class StringPrefsAdapterTest {
 
         assertThat(StringPrefsAdapter.get(prefs, "key", null)).isEqualTo("value");
     }
-
-    @Test
-    public void get_WithoutDefault() throws Exception {
-        assertThat(StringPrefsAdapter.get(prefs, "key")).isEqualTo(null);
-
-        StringPrefsAdapter.set(prefs, "key", "value");
-
-        assertThat(StringPrefsAdapter.get(prefs, "key")).isEqualTo("value");
-    }
-
 }
