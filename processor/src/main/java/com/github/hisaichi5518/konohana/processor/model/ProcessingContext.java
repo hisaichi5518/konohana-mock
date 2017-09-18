@@ -30,7 +30,7 @@ public class ProcessingContext {
     public Stream<StoreDefinition> storeDefinitionStream() {
         return roundEnv.getElementsAnnotatedWith(Store.class)
                 .stream()
-                .filter(element -> element.getKind() == ElementKind.CLASS)
+                .filter(element -> element.getKind() == ElementKind.INTERFACE)
                 .map(element -> new StoreDefinition(this, (TypeElement) element));
     }
 

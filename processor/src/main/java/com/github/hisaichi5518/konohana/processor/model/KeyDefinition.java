@@ -101,13 +101,4 @@ class KeyDefinition {
 
         return ClassName.get(typeMirror);
     }
-
-    public String getDefaultValue() {
-        Key key = element.getAnnotation(Key.class);
-        if (key.defaultValue().equals("")) {
-            return getPrefsAdapterTypeName().toString() + ".DEFAULT_VALUE";
-        }
-
-        return key.defaultValue();
-    }
 }

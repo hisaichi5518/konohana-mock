@@ -2,13 +2,13 @@
 
 ```java
 @Store
-public abstract class User {
+interface User {
 
     @Key
-    int id;
+    int id = -1;
 
     @Key
-    String name;
+    String name = "default-name";
 }
 ```
 
@@ -23,8 +23,9 @@ public class MainActivity extends AppCompatActivity {
 
         Konohana konohana = new Konohana(this);
 
-        int id = konohana.storeOfUser().getId();
+        int id = konohana.storeOfUser().getId(); // Return -1
         konohana.storeOfUser().changes().subscribe(...);
+        konohana.storeOfUser().idChanges().subscribe(...);
     }
 }
 ```
