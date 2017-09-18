@@ -5,8 +5,6 @@ import android.support.annotation.NonNull;
 
 public class BooleanPrefsAdapter {
 
-    public static final boolean DEFAULT_VALUE = false;
-
     public static boolean get(SharedPreferences prefs, @NonNull String key, boolean defaultValue) {
         return prefs.getBoolean(key, defaultValue);
     }
