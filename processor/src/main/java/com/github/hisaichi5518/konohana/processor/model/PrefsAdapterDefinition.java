@@ -30,23 +30,23 @@ class PrefsAdapterDefinition {
     }
 
     @NonNull
-    private static PrefsAdapterDefinition create(@NonNull TypeName target, @NonNull TypeName prefsAdapter) {
-        return new PrefsAdapterDefinition(target, prefsAdapter);
-    }
-
-    boolean match(@NonNull ProcessingContext context, @NonNull TypeName typeName) {
-        return target.equals(typeName);
-    }
-
-    @NonNull
     TypeName getPrefsAdapter() {
         return prefsAdapter;
     }
 
+    @NonNull
+    private static PrefsAdapterDefinition create(@NonNull TypeName target, @NonNull TypeName prefsAdapter) {
+        return new PrefsAdapterDefinition(target, prefsAdapter);
+    }
+
+    private boolean match(@NonNull TypeName typeName) {
+        return target.equals(typeName);
+    }
+
     @Nullable
-    static PrefsAdapterDefinition getPrefsAdapterDefinitionFromBuildIn(@NonNull ProcessingContext context, @NonNull TypeName typeName) {
+    static PrefsAdapterDefinition getPrefsAdapterDefinitionFromBuildIn(@NonNull TypeName typeName) {
         return Stream.of(PrefsAdapterDefinition.BUILD_IN)
-                .filter(prefsAdapterDefinition -> prefsAdapterDefinition.match(context, typeName))
+                .filter(prefsAdapterDefinition -> prefsAdapterDefinition.match(typeName))
                 .findFirst()
                 .orElse(null);
     }
