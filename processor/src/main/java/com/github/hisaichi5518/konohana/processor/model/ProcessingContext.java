@@ -63,4 +63,8 @@ public class ProcessingContext {
                 .findFirst()
                 .orElse(null);
     }
+
+    public void note(String message) {
+        processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, message);
+    }
 }
