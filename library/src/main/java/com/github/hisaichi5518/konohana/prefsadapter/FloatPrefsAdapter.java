@@ -5,8 +5,6 @@ import android.support.annotation.NonNull;
 
 public class FloatPrefsAdapter {
 
-    public static final float DEFAULT_VALUE = 0F;
-
     public static float get(SharedPreferences prefs, @NonNull String key, float defaultValue) {
         return prefs.getFloat(key, defaultValue);
     }

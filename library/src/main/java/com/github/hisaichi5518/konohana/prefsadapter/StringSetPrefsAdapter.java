@@ -8,8 +8,6 @@ import java.util.Set;
 
 public class StringSetPrefsAdapter {
 
-    public static final Set<String> DEFAULT_VALUE = null;
-
     public static Set<String> get(SharedPreferences prefs, @NonNull String key, @Nullable Set<String> defaultValue) {
         return prefs.getStringSet(key, defaultValue);
     }

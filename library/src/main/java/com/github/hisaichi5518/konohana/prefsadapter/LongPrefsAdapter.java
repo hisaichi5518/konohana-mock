@@ -5,8 +5,6 @@ import android.support.annotation.NonNull;
 
 public class LongPrefsAdapter {
 
-    public static final long DEFAULT_VALUE = 0L;
-
     public static long get(SharedPreferences prefs, @NonNull String key, long defaultValue) {
         return prefs.getLong(key, defaultValue);
     }

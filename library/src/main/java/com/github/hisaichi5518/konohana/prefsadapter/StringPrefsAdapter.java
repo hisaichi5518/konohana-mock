@@ -6,8 +6,6 @@ import android.support.annotation.Nullable;
 
 public class StringPrefsAdapter {
 
-    public static final String DEFAULT_VALUE = null;
-
     @Nullable
     public static String get(SharedPreferences prefs, @NonNull String key, @Nullable String defaultValue) {
         return prefs.getString(key, defaultValue);
