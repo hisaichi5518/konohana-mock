@@ -9,5 +9,7 @@ public @interface Key {
 
     Class<?> prefsAdapter() default UseBuildInPrefsAdapter.class;
 
+    String defaultValue() default "";
+
     class UseBuildInPrefsAdapter {}
 }
