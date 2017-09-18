@@ -7,6 +7,7 @@ import com.github.hisaichi5518.konohana.processor.writer.StoreWriter;
 import com.google.auto.service.AutoService;
 
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Processor;
@@ -23,6 +24,8 @@ public class KonohanaProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
 
+        long t0 = System.nanoTime();
+
         ProcessingContext context = new ProcessingContext(processingEnv, roundEnv);
         try {
             context.storeDefinitionStream().forEach(
@@ -32,6 +35,8 @@ public class KonohanaProcessor extends AbstractProcessor {
         } catch (ProcessingException e) {
             context.error(e.getMessage(), e.getElement());
         }
+
+        context.note("Finished: " + TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - t0) + "ms");
 
         return true;
     }

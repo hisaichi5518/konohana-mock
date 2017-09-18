@@ -14,15 +14,27 @@ import javax.lang.model.type.TypeMirror;
 class KeyDefinition {
     private final ProcessingContext context;
     private final VariableElement element;
+    private final Key key;
+    private final TypeName fieldTypeName;
+    private final String capitalizedName;
+    private final TypeName prefsAdapterTypeName;
 
     KeyDefinition(@NonNull ProcessingContext context, @NonNull VariableElement element) {
         this.context = context;
         this.element = element;
+
+        key = element.getAnnotation(Key.class);
+        fieldTypeName = TypeName.get(element.asType());
+        capitalizedName = upperFirst(element.getSimpleName().toString());
+        prefsAdapterTypeName = _getPrefsAdapterTypeName();
+
+        if (fieldTypeName.isBoxedPrimitive()) {
+            throw new ProcessingException("Cannot use boxed primitive type!", element);
+        }
     }
 
     @NonNull
     String getPrefsKeyName() {
-        Key key = element.getAnnotation(Key.class);
         if (key.name().isEmpty()) {
             return element.getSimpleName().toString();
         }
@@ -36,8 +48,8 @@ class KeyDefinition {
     }
 
     @NonNull
-    TypeName getFieldClassName() {
-        return TypeName.get(element.asType());
+    TypeName getFieldTypeName() {
+        return fieldTypeName;
     }
 
     @NonNull
@@ -62,30 +74,12 @@ class KeyDefinition {
 
     @NonNull
     TypeName getPrefsAdapterTypeName() {
-        TypeName customPrefsAdapter = getCustomPrefsAdapter();
-        PrefsAdapterDefinition definition;
-        if (customPrefsAdapter.equals(KonohanaTypes.UseBuildInPrefsAdapter)) {
-            // Use BuildIn PrefsAdapter
-            definition = context.getPrefsAdapterDefinition(getFieldClassName());
-        } else {
-            // Use Custom PrefsAdapter
-            definition = new PrefsAdapterDefinition(getFieldClassName(), customPrefsAdapter);
-        }
-
-        if (definition == null) {
-            // ex) Can not find available PrefsAdapter for admin field(type: Boolean) of User class
-            throw new ProcessingException(
-                    "Can not find available PrefsAdapter for "
-                            + element.getSimpleName() + " field(type: " + getFieldClassName().toString() + ")"
-                            + " of " + element.getEnclosingElement().getSimpleName() + " class.", element);
-        }
-
-        return definition.getPrefsAdapter();
+        return prefsAdapterTypeName;
     }
 
     @NonNull
     private String getCapitalizedName() {
-        return upperFirst(element.getSimpleName().toString());
+        return capitalizedName;
     }
 
     @NonNull
@@ -101,4 +95,28 @@ class KeyDefinition {
 
         return ClassName.get(typeMirror);
     }
+
+    @NonNull
+    private TypeName _getPrefsAdapterTypeName() {
+        TypeName customPrefsAdapter = getCustomPrefsAdapter();
+        PrefsAdapterDefinition definition;
+        if (customPrefsAdapter.equals(KonohanaTypes.UseBuildInPrefsAdapter)) {
+            // Use BuildIn PrefsAdapter
+            definition = PrefsAdapterDefinition.getPrefsAdapterDefinitionFromBuildIn(getFieldTypeName());
+        } else {
+            // Use Custom PrefsAdapter
+            definition = new PrefsAdapterDefinition(getFieldTypeName(), customPrefsAdapter);
+        }
+
+        if (definition == null) {
+            // ex) Can not find available PrefsAdapter for admin field(type: Boolean) of User class
+            throw new ProcessingException(
+                    "Can not find available PrefsAdapter for "
+                            + element.getSimpleName() + " field(type: " + getFieldTypeName().toString() + ")"
+                            + " of " + element.getEnclosingElement().getSimpleName() + " class.", element);
+        }
+
+        return definition.getPrefsAdapter();
+    }
+
 }

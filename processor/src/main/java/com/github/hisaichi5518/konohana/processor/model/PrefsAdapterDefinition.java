@@ -1,10 +1,13 @@
 package com.github.hisaichi5518.konohana.processor.model;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.github.hisaichi5518.konohana.processor.types.JavaTypes;
 import com.github.hisaichi5518.konohana.processor.types.KonohanaTypes;
 import com.squareup.javapoet.TypeName;
+
+import java.util.stream.Stream;
 
 class PrefsAdapterDefinition {
 
@@ -27,16 +30,24 @@ class PrefsAdapterDefinition {
     }
 
     @NonNull
+    TypeName getPrefsAdapter() {
+        return prefsAdapter;
+    }
+
+    @NonNull
     private static PrefsAdapterDefinition create(@NonNull TypeName target, @NonNull TypeName prefsAdapter) {
         return new PrefsAdapterDefinition(target, prefsAdapter);
     }
 
-    boolean match(@NonNull TypeName typeName) {
+    private boolean match(@NonNull TypeName typeName) {
         return target.equals(typeName);
     }
 
-    @NonNull
-    TypeName getPrefsAdapter() {
-        return prefsAdapter;
+    @Nullable
+    static PrefsAdapterDefinition getPrefsAdapterDefinitionFromBuildIn(@NonNull TypeName typeName) {
+        return Stream.of(PrefsAdapterDefinition.BUILD_IN)
+                .filter(prefsAdapterDefinition -> prefsAdapterDefinition.match(typeName))
+                .findFirst()
+                .orElse(null);
     }
 }

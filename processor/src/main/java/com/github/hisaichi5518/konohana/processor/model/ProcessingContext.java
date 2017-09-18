@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.github.hisaichi5518.konohana.annotation.Store;
-import com.squareup.javapoet.TypeName;
 
 import java.util.stream.Stream;
 
@@ -56,11 +55,7 @@ public class ProcessingContext {
                 .orElse(null);
     }
 
-    @Nullable
-    PrefsAdapterDefinition getPrefsAdapterDefinition(@NonNull TypeName typeName) {
-        return Stream.of(PrefsAdapterDefinition.BUILD_IN)
-                .filter(prefsAdapterDefinition -> prefsAdapterDefinition.match(typeName))
-                .findFirst()
-                .orElse(null);
+    public void note(String message) {
+        processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, message);
     }
 }
