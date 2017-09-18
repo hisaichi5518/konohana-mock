@@ -106,9 +106,6 @@ public class StoreMethodsBuilder {
 
     @NonNull
     private MethodSpec buildGetterWithDefaultSpec(@NonNull KeyDefinition keyDefinition) {
-
-        // TODO: throw ProcessingException if defaultValue is null
-
         MethodSpec.Builder builder = MethodSpec.methodBuilder(keyDefinition.getGetterName())
                 .returns(keyDefinition.getFieldClassName())
                 .addModifiers(Modifier.PUBLIC)
