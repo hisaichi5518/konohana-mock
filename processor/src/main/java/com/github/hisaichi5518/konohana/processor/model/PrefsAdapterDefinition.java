@@ -21,7 +21,7 @@ class PrefsAdapterDefinition {
     private final TypeName target;
     private final TypeName prefsAdapter;
 
-    private PrefsAdapterDefinition(@NonNull TypeName target, @NonNull TypeName prefsAdapter) {
+    PrefsAdapterDefinition(@NonNull TypeName target, @NonNull TypeName prefsAdapter) {
         this.target = target;
         this.prefsAdapter = prefsAdapter;
     }
