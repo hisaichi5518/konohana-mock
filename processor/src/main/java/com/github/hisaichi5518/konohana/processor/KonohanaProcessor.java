@@ -1,5 +1,6 @@
 package com.github.hisaichi5518.konohana.processor;
 
+import com.github.hisaichi5518.konohana.processor.exception.ProcessingException;
 import com.github.hisaichi5518.konohana.processor.model.ProcessingContext;
 import com.github.hisaichi5518.konohana.processor.writer.KonohanaWriter;
 import com.github.hisaichi5518.konohana.processor.writer.StoreWriter;
@@ -23,12 +24,14 @@ public class KonohanaProcessor extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
 
         ProcessingContext context = new ProcessingContext(processingEnv, roundEnv);
+        try {
+            context.storeDefinitionStream().forEach(
+                    storeDefinition -> new StoreWriter(storeDefinition).write());
 
-        context.storeDefinitionStream().forEach(
-                storeDefinition -> new StoreWriter(storeDefinition).write());
-
-        // new KonohanaDefinition(context)
-        new KonohanaWriter(context).write();
+            new KonohanaWriter(context).write();
+        } catch (ProcessingException e) {
+            context.error(e.getMessage(), e.getElement());
+        }
 
         return true;
     }

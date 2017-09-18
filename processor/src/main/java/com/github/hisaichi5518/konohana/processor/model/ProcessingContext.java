@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
+import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
@@ -38,7 +39,7 @@ public class ProcessingContext {
         return processingEnv.getFiler();
     }
 
-    public void error(@NonNull String message, @NonNull TypeElement element) {
+    public void error(@NonNull String message, @NonNull Element element) {
         processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, message, element);
     }
 
