@@ -23,25 +23,24 @@ public class BooleanTypeAdapterTest {
 
     @Before
     public void setup() {
-        adapter = new BooleanTypeAdapter();
         prefs = RuntimeEnvironment.application.getSharedPreferences("tests", Context.MODE_PRIVATE);
     }
 
     @Test
     public void get_WithDefault() throws Exception {
-        assertThat(adapter.get(prefs, "key", false)).isFalse();
+        assertThat(BooleanTypeAdapter.get(prefs, "key", false)).isFalse();
 
-        adapter.set(prefs, "key", true);
+        BooleanTypeAdapter.set(prefs, "key", true);
 
-        assertThat(adapter.get(prefs, "key", false)).isTrue();
+        assertThat(BooleanTypeAdapter.get(prefs, "key", false)).isTrue();
     }
 
     @Test
     public void get_WithoutDefault() throws Exception {
-        assertThat(adapter.get(prefs, "key")).isFalse();
+        assertThat(BooleanTypeAdapter.get(prefs, "key")).isFalse();
 
-        adapter.set(prefs, "key", true);
+        BooleanTypeAdapter.set(prefs, "key", true);
 
-        assertThat(adapter.get(prefs, "key")).isTrue();
+        assertThat(BooleanTypeAdapter.get(prefs, "key")).isTrue();
     }
 }

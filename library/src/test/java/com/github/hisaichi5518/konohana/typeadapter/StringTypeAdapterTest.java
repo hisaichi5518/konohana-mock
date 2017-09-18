@@ -18,31 +18,29 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 @Config(constants = BuildConfig.class)
 public class StringTypeAdapterTest {
 
-    private StringTypeAdapter adapter;
     private SharedPreferences prefs;
 
     @Before
     public void setup() {
-        adapter = new StringTypeAdapter();
         prefs = RuntimeEnvironment.application.getSharedPreferences("tests", Context.MODE_PRIVATE);
     }
 
     @Test
     public void get_WithDefault() throws Exception {
-        assertThat(adapter.get(prefs, "key", null)).isEqualTo(null);
+        assertThat(StringTypeAdapter.get(prefs, "key", null)).isEqualTo(null);
 
-        adapter.set(prefs, "key", "value");
+        StringTypeAdapter.set(prefs, "key", "value");
 
-        assertThat(adapter.get(prefs, "key", null)).isEqualTo("value");
+        assertThat(StringTypeAdapter.get(prefs, "key", null)).isEqualTo("value");
     }
 
     @Test
     public void get_WithoutDefault() throws Exception {
-        assertThat(adapter.get(prefs, "key")).isEqualTo(null);
+        assertThat(StringTypeAdapter.get(prefs, "key")).isEqualTo(null);
 
-        adapter.set(prefs, "key", "value");
+        StringTypeAdapter.set(prefs, "key", "value");
 
-        assertThat(adapter.get(prefs, "key")).isEqualTo("value");
+        assertThat(StringTypeAdapter.get(prefs, "key")).isEqualTo("value");
     }
 
 }

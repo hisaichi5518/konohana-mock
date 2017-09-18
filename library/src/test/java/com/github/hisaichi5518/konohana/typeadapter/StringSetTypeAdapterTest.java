@@ -21,37 +21,35 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 @Config(constants = BuildConfig.class)
 public class StringSetTypeAdapterTest {
 
-    private StringSetTypeAdapter adapter;
     private SharedPreferences prefs;
 
     @Before
     public void setup() {
-        adapter = new StringSetTypeAdapter();
         prefs = RuntimeEnvironment.application.getSharedPreferences("tests", Context.MODE_PRIVATE);
     }
 
     @Test
     public void get_WithDefault() throws Exception {
-        assertThat(adapter.get(prefs, "key", null)).isEqualTo(null);
+        assertThat(StringSetTypeAdapter.get(prefs, "key", null)).isEqualTo(null);
 
         Set<String> strings = new HashSet<>();
         strings.add("hoge");
 
-        adapter.set(prefs, "key", strings);
+        StringSetTypeAdapter.set(prefs, "key", strings);
 
-        assertThat(adapter.get(prefs, "key", null)).isEqualTo(strings);
+        assertThat(StringSetTypeAdapter.get(prefs, "key", null)).isEqualTo(strings);
     }
 
     @Test
     public void get_WithoutDefault() throws Exception {
-        assertThat(adapter.get(prefs, "key")).isEqualTo(null);
+        assertThat(StringSetTypeAdapter.get(prefs, "key")).isEqualTo(null);
 
         Set<String> strings = new HashSet<>();
         strings.add("hoge");
 
-        adapter.set(prefs, "key", strings);
+        StringSetTypeAdapter.set(prefs, "key", strings);
 
-        assertThat(adapter.get(prefs, "key")).isEqualTo(strings);
+        assertThat(StringSetTypeAdapter.get(prefs, "key")).isEqualTo(strings);
     }
 
 }

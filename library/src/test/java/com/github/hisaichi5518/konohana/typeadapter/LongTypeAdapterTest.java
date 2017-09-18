@@ -18,31 +18,29 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 @Config(constants = BuildConfig.class)
 public class LongTypeAdapterTest {
 
-    private LongTypeAdapter adapter;
     private SharedPreferences prefs;
 
     @Before
     public void setup() {
-        adapter = new LongTypeAdapter();
         prefs = RuntimeEnvironment.application.getSharedPreferences("tests", Context.MODE_PRIVATE);
     }
 
     @Test
     public void get_WithDefault() throws Exception {
-        assertThat(adapter.get(prefs, "key", 0L)).isEqualTo(0L);
+        assertThat(LongTypeAdapter.get(prefs, "key", 0L)).isEqualTo(0L);
 
-        adapter.set(prefs, "key", 1L);
+        LongTypeAdapter.set(prefs, "key", 1L);
 
-        assertThat(adapter.get(prefs, "key", 0L)).isEqualTo(1L);
+        assertThat(LongTypeAdapter.get(prefs, "key", 0L)).isEqualTo(1L);
     }
 
     @Test
     public void get_WithoutDefault() throws Exception {
-        assertThat(adapter.get(prefs, "key")).isEqualTo(0L);
+        assertThat(LongTypeAdapter.get(prefs, "key")).isEqualTo(0L);
 
-        adapter.set(prefs, "key", 1L);
+        LongTypeAdapter.set(prefs, "key", 1L);
 
-        assertThat(adapter.get(prefs, "key")).isEqualTo(1L);
+        assertThat(LongTypeAdapter.get(prefs, "key")).isEqualTo(1L);
     }
 
 }
