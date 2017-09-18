@@ -1,4 +1,4 @@
-package com.github.hisaichi5518.konohana.typeadapter;
+package com.github.hisaichi5518.konohana.prefsadapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,9 +16,9 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class)
-public class BooleanTypeAdapterTest {
+public class BooleanPrefsAdapterTest {
 
-    private BooleanTypeAdapter adapter;
+    private BooleanPrefsAdapter adapter;
     private SharedPreferences prefs;
 
     @Before
@@ -28,19 +28,19 @@ public class BooleanTypeAdapterTest {
 
     @Test
     public void get_WithDefault() throws Exception {
-        assertThat(BooleanTypeAdapter.get(prefs, "key", false)).isFalse();
+        assertThat(BooleanPrefsAdapter.get(prefs, "key", false)).isFalse();
 
-        BooleanTypeAdapter.set(prefs, "key", true);
+        BooleanPrefsAdapter.set(prefs, "key", true);
 
-        assertThat(BooleanTypeAdapter.get(prefs, "key", false)).isTrue();
+        assertThat(BooleanPrefsAdapter.get(prefs, "key", false)).isTrue();
     }
 
     @Test
     public void get_WithoutDefault() throws Exception {
-        assertThat(BooleanTypeAdapter.get(prefs, "key")).isFalse();
+        assertThat(BooleanPrefsAdapter.get(prefs, "key")).isFalse();
 
-        BooleanTypeAdapter.set(prefs, "key", true);
+        BooleanPrefsAdapter.set(prefs, "key", true);
 
-        assertThat(BooleanTypeAdapter.get(prefs, "key")).isTrue();
+        assertThat(BooleanPrefsAdapter.get(prefs, "key")).isTrue();
     }
 }

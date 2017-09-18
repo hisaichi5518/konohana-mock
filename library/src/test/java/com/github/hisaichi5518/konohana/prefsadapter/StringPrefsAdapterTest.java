@@ -1,4 +1,4 @@
-package com.github.hisaichi5518.konohana.typeadapter;
+package com.github.hisaichi5518.konohana.prefsadapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,7 +16,7 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class)
-public class LongTypeAdapterTest {
+public class StringPrefsAdapterTest {
 
     private SharedPreferences prefs;
 
@@ -27,20 +27,20 @@ public class LongTypeAdapterTest {
 
     @Test
     public void get_WithDefault() throws Exception {
-        assertThat(LongTypeAdapter.get(prefs, "key", 0L)).isEqualTo(0L);
+        assertThat(StringPrefsAdapter.get(prefs, "key", null)).isEqualTo(null);
 
-        LongTypeAdapter.set(prefs, "key", 1L);
+        StringPrefsAdapter.set(prefs, "key", "value");
 
-        assertThat(LongTypeAdapter.get(prefs, "key", 0L)).isEqualTo(1L);
+        assertThat(StringPrefsAdapter.get(prefs, "key", null)).isEqualTo("value");
     }
 
     @Test
     public void get_WithoutDefault() throws Exception {
-        assertThat(LongTypeAdapter.get(prefs, "key")).isEqualTo(0L);
+        assertThat(StringPrefsAdapter.get(prefs, "key")).isEqualTo(null);
 
-        LongTypeAdapter.set(prefs, "key", 1L);
+        StringPrefsAdapter.set(prefs, "key", "value");
 
-        assertThat(LongTypeAdapter.get(prefs, "key")).isEqualTo(1L);
+        assertThat(StringPrefsAdapter.get(prefs, "key")).isEqualTo("value");
     }
 
 }

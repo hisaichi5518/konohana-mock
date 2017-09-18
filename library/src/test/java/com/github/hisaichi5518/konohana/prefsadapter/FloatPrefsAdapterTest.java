@@ -1,4 +1,4 @@
-package com.github.hisaichi5518.konohana.typeadapter;
+package com.github.hisaichi5518.konohana.prefsadapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,7 +16,7 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class)
-public class FloatTypeAdapterTest {
+public class FloatPrefsAdapterTest {
 
     private SharedPreferences prefs;
 
@@ -27,20 +27,20 @@ public class FloatTypeAdapterTest {
 
     @Test
     public void get_WithDefault() throws Exception {
-        assertThat(FloatTypeAdapter.get(prefs, "key", 0F)).isEqualTo(0F);
+        assertThat(FloatPrefsAdapter.get(prefs, "key", 0F)).isEqualTo(0F);
 
-        FloatTypeAdapter.set(prefs, "key", 1F);
+        FloatPrefsAdapter.set(prefs, "key", 1F);
 
-        assertThat(FloatTypeAdapter.get(prefs, "key", 0F)).isEqualTo(1F);
+        assertThat(FloatPrefsAdapter.get(prefs, "key", 0F)).isEqualTo(1F);
     }
 
     @Test
     public void get_WithoutDefault() throws Exception {
-        assertThat(FloatTypeAdapter.get(prefs, "key")).isEqualTo(0F);
+        assertThat(FloatPrefsAdapter.get(prefs, "key")).isEqualTo(0F);
 
-        FloatTypeAdapter.set(prefs, "key", 1F);
+        FloatPrefsAdapter.set(prefs, "key", 1F);
 
-        assertThat(FloatTypeAdapter.get(prefs, "key")).isEqualTo(1F);
+        assertThat(FloatPrefsAdapter.get(prefs, "key")).isEqualTo(1F);
     }
 
 }

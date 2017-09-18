@@ -8,16 +8,16 @@ public class KonohanaTypes {
 
     private static final String TYPE_ADAPTER_PACKAGE = PACKAGE + ".typeadapter";
 
-    public static final ClassName IntegerTypeAdapter = ClassName.get(TYPE_ADAPTER_PACKAGE, "IntegerTypeAdapter");
+    public static final ClassName IntegerPrefsAdapter = ClassName.get(TYPE_ADAPTER_PACKAGE, "IntegerPrefsAdapter");
 
-    public static final ClassName FloatTypeAdapter = ClassName.get(TYPE_ADAPTER_PACKAGE, "FloatTypeAdapter");
+    public static final ClassName FloatPrefsAdapter = ClassName.get(TYPE_ADAPTER_PACKAGE, "FloatPrefsAdapter");
 
-    public static final ClassName LongTypeAdapter = ClassName.get(TYPE_ADAPTER_PACKAGE, "LongTypeAdapter");
+    public static final ClassName LongPrefsAdapter = ClassName.get(TYPE_ADAPTER_PACKAGE, "LongPrefsAdapter");
 
-    public static final ClassName BooleanTypeAdapter = ClassName.get(TYPE_ADAPTER_PACKAGE, "BooleanTypeAdapter");
+    public static final ClassName BooleanPrefsAdapter = ClassName.get(TYPE_ADAPTER_PACKAGE, "BooleanPrefsAdapter");
 
-    public static final ClassName StringTypeAdapter = ClassName.get(TYPE_ADAPTER_PACKAGE, "StringTypeAdapter");
+    public static final ClassName StringPrefsAdapter = ClassName.get(TYPE_ADAPTER_PACKAGE, "StringPrefsAdapter");
 
-    public static final ClassName StringSetTypeAdapter = ClassName.get(TYPE_ADAPTER_PACKAGE, "StringSetTypeAdapter");
+    public static final ClassName StringSetPrefsAdapter = ClassName.get(TYPE_ADAPTER_PACKAGE, "StringSetPrefsAdapter");
 
 }

@@ -57,14 +57,14 @@ class KeyDefinition {
     }
 
     @NonNull
-    TypeName getTypeAdapterTypeName() {
-        TypeAdapterDefinition definition = context.getTypeAdapterDefinition(getFieldClassName());
+    TypeName getPrefsAdapterTypeName() {
+        PrefsAdapterDefinition definition = context.getPrefsAdapterDefinition(getFieldClassName());
         if (definition == null) {
             // FIXME: error message
-            throw new RuntimeException("TypeAdapterが見つかりませんでした");
+            throw new RuntimeException("PrefsAdapterが見つかりませんでした");
         }
 
-        return definition.getTypeAdapter();
+        return definition.getPrefsAdapter();
     }
 
     @NonNull

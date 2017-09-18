@@ -1,4 +1,4 @@
-package com.github.hisaichi5518.konohana.typeadapter;
+package com.github.hisaichi5518.konohana.prefsadapter;
 
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 
 import java.util.Set;
 
-public class StringSetTypeAdapter {
+public class StringSetPrefsAdapter {
     @Nullable
     public static Set<String> get(SharedPreferences prefs, @NonNull String key) {
         return get(prefs, key, null);

@@ -107,7 +107,7 @@ public class StoreMethodsBuilder {
         MethodSpec.Builder builder = MethodSpec.methodBuilder(keyDefinition.getSetterName())
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ParameterSpec.builder(keyDefinition.getFieldClassName(), "value").addAnnotation(Annotations.NonNull).build())
-                .addStatement("$T.set(prefs, $S, value)", keyDefinition.getTypeAdapterTypeName(), keyDefinition.getPrefsKeyName());
+                .addStatement("$T.set(prefs, $S, value)", keyDefinition.getPrefsAdapterTypeName(), keyDefinition.getPrefsKeyName());
 
         return builder.build();
     }
@@ -120,7 +120,7 @@ public class StoreMethodsBuilder {
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Annotations.NonNull)
                 .addParameter(ParameterSpec.builder(keyDefinition.getFieldClassName(), "defaultValue").addAnnotation(Annotations.NonNull).build())
-                .addStatement("return $T.get(prefs, $S, defaultValue)", keyDefinition.getTypeAdapterTypeName(), keyDefinition.getPrefsKeyName());
+                .addStatement("return $T.get(prefs, $S, defaultValue)", keyDefinition.getPrefsAdapterTypeName(), keyDefinition.getPrefsKeyName());
 
         return builder.build();
     }
@@ -132,7 +132,7 @@ public class StoreMethodsBuilder {
                 .returns(keyDefinition.getFieldClassName())
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Annotations.NonNull)
-                .addStatement("return $T.get(prefs, $S)", keyDefinition.getTypeAdapterTypeName(), keyDefinition.getPrefsKeyName());
+                .addStatement("return $T.get(prefs, $S)", keyDefinition.getPrefsAdapterTypeName(), keyDefinition.getPrefsKeyName());
 
         return builder.build();
     }
