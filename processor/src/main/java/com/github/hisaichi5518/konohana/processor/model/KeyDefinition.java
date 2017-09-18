@@ -14,15 +14,23 @@ import javax.lang.model.type.TypeMirror;
 class KeyDefinition {
     private final ProcessingContext context;
     private final VariableElement element;
+    private final Key key;
+    private final TypeName fieldTypeName;
+    private final String capitalizedName;
+    private final TypeName prefsAdapterTypeName;
 
     KeyDefinition(@NonNull ProcessingContext context, @NonNull VariableElement element) {
         this.context = context;
         this.element = element;
+
+        key = element.getAnnotation(Key.class);
+        fieldTypeName = TypeName.get(element.asType());
+        capitalizedName = upperFirst(element.getSimpleName().toString());
+        prefsAdapterTypeName = _getPrefsAdapterTypeName();
     }
 
     @NonNull
     String getPrefsKeyName() {
-        Key key = element.getAnnotation(Key.class);
         if (key.name().isEmpty()) {
             return element.getSimpleName().toString();
         }
@@ -37,7 +45,7 @@ class KeyDefinition {
 
     @NonNull
     TypeName getFieldTypeName() {
-        return TypeName.get(element.asType());
+        return fieldTypeName;
     }
 
     @NonNull
@@ -62,6 +70,30 @@ class KeyDefinition {
 
     @NonNull
     TypeName getPrefsAdapterTypeName() {
+        return prefsAdapterTypeName;
+    }
+
+    @NonNull
+    private String getCapitalizedName() {
+        return capitalizedName;
+    }
+
+    @NonNull
+    private String upperFirst(@NonNull String str) {
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
+
+    private TypeName getCustomPrefsAdapter() {
+        TypeMirror typeMirror = AnnotationExtend.getValue(element, Key.class, "prefsAdapter");
+        if (typeMirror == null) {
+            throw new ProcessingException("prefsAdapter is null", element);
+        }
+
+        return ClassName.get(typeMirror);
+    }
+
+    @NonNull
+    private TypeName _getPrefsAdapterTypeName() {
         TypeName customPrefsAdapter = getCustomPrefsAdapter();
         PrefsAdapterDefinition definition;
         if (customPrefsAdapter.equals(KonohanaTypes.UseBuildInPrefsAdapter)) {
@@ -83,22 +115,4 @@ class KeyDefinition {
         return definition.getPrefsAdapter();
     }
 
-    @NonNull
-    private String getCapitalizedName() {
-        return upperFirst(element.getSimpleName().toString());
-    }
-
-    @NonNull
-    private String upperFirst(@NonNull String str) {
-        return str.substring(0, 1).toUpperCase() + str.substring(1);
-    }
-
-    private TypeName getCustomPrefsAdapter() {
-        TypeMirror typeMirror = AnnotationExtend.getValue(element, Key.class, "prefsAdapter");
-        if (typeMirror == null) {
-            throw new ProcessingException("prefsAdapter is null", element);
-        }
-
-        return ClassName.get(typeMirror);
-    }
 }
