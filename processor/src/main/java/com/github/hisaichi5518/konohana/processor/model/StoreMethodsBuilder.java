@@ -98,7 +98,7 @@ public class StoreMethodsBuilder {
     private MethodSpec buildSetterSpec(@NonNull KeyDefinition keyDefinition) {
         MethodSpec.Builder builder = MethodSpec.methodBuilder(keyDefinition.getSetterName())
                 .addModifiers(Modifier.PUBLIC)
-                .addParameter(ParameterSpec.builder(keyDefinition.getFieldClassName(), "value").addAnnotation(Annotations.NonNull).build())
+                .addParameter(ParameterSpec.builder(keyDefinition.getFieldTypeName(), "value").addAnnotation(Annotations.NonNull).build())
                 .addStatement("$T.set(prefs, $S, value)", keyDefinition.getPrefsAdapterTypeName(), keyDefinition.getPrefsKeyName());
 
         return builder.build();
@@ -107,7 +107,7 @@ public class StoreMethodsBuilder {
     @NonNull
     private MethodSpec buildGetterWithDefaultSpec(@NonNull KeyDefinition keyDefinition) {
         MethodSpec.Builder builder = MethodSpec.methodBuilder(keyDefinition.getGetterName())
-                .returns(keyDefinition.getFieldClassName())
+                .returns(keyDefinition.getFieldTypeName())
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Annotations.NonNull)
                 .addStatement("return $T.get(prefs, $S, $L)",

@@ -36,7 +36,7 @@ class KeyDefinition {
     }
 
     @NonNull
-    TypeName getFieldClassName() {
+    TypeName getFieldTypeName() {
         return TypeName.get(element.asType());
     }
 
@@ -66,17 +66,17 @@ class KeyDefinition {
         PrefsAdapterDefinition definition;
         if (customPrefsAdapter.equals(KonohanaTypes.UseBuildInPrefsAdapter)) {
             // Use BuildIn PrefsAdapter
-            definition = context.getPrefsAdapterDefinition(getFieldClassName());
+            definition = context.getPrefsAdapterDefinition(getFieldTypeName());
         } else {
             // Use Custom PrefsAdapter
-            definition = new PrefsAdapterDefinition(getFieldClassName(), customPrefsAdapter);
+            definition = new PrefsAdapterDefinition(getFieldTypeName(), customPrefsAdapter);
         }
 
         if (definition == null) {
             // ex) Can not find available PrefsAdapter for admin field(type: Boolean) of User class
             throw new ProcessingException(
                     "Can not find available PrefsAdapter for "
-                            + element.getSimpleName() + " field(type: " + getFieldClassName().toString() + ")"
+                            + element.getSimpleName() + " field(type: " + getFieldTypeName().toString() + ")"
                             + " of " + element.getEnclosingElement().getSimpleName() + " class.", element);
         }
 
