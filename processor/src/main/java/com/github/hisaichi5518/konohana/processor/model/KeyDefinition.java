@@ -60,8 +60,14 @@ class KeyDefinition {
     TypeName getPrefsAdapterTypeName() {
         PrefsAdapterDefinition definition = context.getPrefsAdapterDefinition(getFieldClassName());
         if (definition == null) {
-            // FIXME: error message
-            throw new RuntimeException("PrefsAdapterが見つかりませんでした");
+            // Can not find available PrefsAdapter for admin field(type: Boolean) of User class
+            // TODO: Pass element
+            throw new RuntimeException(
+                    "Can not find available PrefsAdapter for "
+                            + element.getSimpleName() + " field(type: " + getFieldClassName().toString() + ")"
+                            + " of " + element.getEnclosingElement().getSimpleName() + " class.");
+
+
         }
 
         return definition.getPrefsAdapter();
