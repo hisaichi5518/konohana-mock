@@ -21,13 +21,13 @@ public class StoreDefinition {
     }
 
     @NonNull
-    public ClassName getClassName() {
+    public ClassName getInterfaceName() {
         return ClassName.get(element);
     }
 
     @NonNull
     String getPackageName() {
-        return getClassName().packageName();
+        return getInterfaceName().packageName();
     }
 
     @NonNull
@@ -51,7 +51,7 @@ public class StoreDefinition {
 
     @NonNull
     public ClassName getStoreClassName() {
-        return ClassName.get(getClassName().packageName(), getClassName().simpleName() + "_Store");
+        return ClassName.get(getInterfaceName().packageName(), getInterfaceName().simpleName() + "_Store");
     }
 
     @NonNull

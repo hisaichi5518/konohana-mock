@@ -73,7 +73,7 @@ public class KonohanaWriter {
         List<MethodSpec> specs = new ArrayList<>();
 
         context.storeDefinitionStream().forEach(storeContext -> {
-            specs.add(MethodSpec.methodBuilder("storeOf" + storeContext.getClassName().simpleName())
+            specs.add(MethodSpec.methodBuilder("storeOf" + storeContext.getInterfaceName().simpleName())
                     .addModifiers(Modifier.PUBLIC)
                     .returns(storeContext.getStoreClassName())
                     .addStatement("return new $T(applicationContext)", storeContext.getStoreClassName())

@@ -28,14 +28,14 @@ public class StoreWriter {
     public void write() {
 
         TypeSpec typeSpec = TypeSpec.classBuilder(storeDefinition.getStoreClassName())
-                .addSuperinterface(storeDefinition.getClassName())
+                .addSuperinterface(storeDefinition.getInterfaceName())
                 .addFields(buildFields())
                 .addMethods(buildConstructors())
                 .addMethods(new StoreMethodsBuilder(storeDefinition).build())
                 .build();
 
         try {
-            JavaFile.builder(storeDefinition.getClassName().packageName(), typeSpec)
+            JavaFile.builder(storeDefinition.getInterfaceName().packageName(), typeSpec)
                     .build()
                     .writeTo(storeDefinition.context.getFiler());
         } catch (IOException e) {
