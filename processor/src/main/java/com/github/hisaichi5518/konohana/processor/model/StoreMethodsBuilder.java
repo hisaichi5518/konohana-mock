@@ -57,7 +57,6 @@ public class StoreMethodsBuilder {
         // Create Getters, Setters and more
         storeDefinition.keyDefinitionStream().forEach(keyDefinition -> {
             methods.add(buildGetterWithDefaultSpec(keyDefinition));
-            methods.add(buildGetterSpec(keyDefinition));
             methods.add(buildSetterSpec(keyDefinition));
             methods.add(buildHasMethodSpec(keyDefinition));
             methods.add(buildRemoverSpec(keyDefinition));
@@ -101,19 +100,6 @@ public class StoreMethodsBuilder {
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ParameterSpec.builder(keyDefinition.getFieldClassName(), "value").addAnnotation(Annotations.NonNull).build())
                 .addStatement("$T.set(prefs, $S, value)", keyDefinition.getPrefsAdapterTypeName(), keyDefinition.getPrefsKeyName());
-
-        return builder.build();
-    }
-
-    @NonNull
-    private MethodSpec buildGetterSpec(@NonNull KeyDefinition keyDefinition) {
-
-        MethodSpec.Builder builder = MethodSpec.methodBuilder(keyDefinition.getGetterName())
-                .returns(keyDefinition.getFieldClassName())
-                .addModifiers(Modifier.PUBLIC)
-                .addAnnotation(Annotations.NonNull)
-                .addParameter(ParameterSpec.builder(keyDefinition.getFieldClassName(), "defaultValue").addAnnotation(Annotations.NonNull).build())
-                .addStatement("return $T.get(prefs, $S, defaultValue)", keyDefinition.getPrefsAdapterTypeName(), keyDefinition.getPrefsKeyName());
 
         return builder.build();
     }
