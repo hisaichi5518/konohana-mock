@@ -2,13 +2,9 @@ package com.github.hisaichi5518.konohana.processor.model;
 
 import android.support.annotation.NonNull;
 
-import com.github.hisaichi5518.konohana.annotation.TypeAdapter;
 import com.github.hisaichi5518.konohana.processor.types.JavaTypes;
 import com.github.hisaichi5518.konohana.processor.types.KonohanaTypes;
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
-
-import javax.lang.model.element.TypeElement;
 
 class TypeAdapterDefinition {
 
@@ -35,14 +31,8 @@ class TypeAdapterDefinition {
         return new TypeAdapterDefinition(target, typeAdapter);
     }
 
-    @NonNull
-    static TypeAdapterDefinition create(@NonNull TypeElement typeElement) {
-        TypeAdapter adapter = typeElement.getAnnotation(TypeAdapter.class);
-        return new TypeAdapterDefinition(ClassName.get(adapter.value()), ClassName.get(typeElement));
-    }
-
     boolean match(@NonNull TypeName typeName) {
-        return target.toString().equals(typeName.toString());
+        return target.equals(typeName);
     }
 
     @NonNull

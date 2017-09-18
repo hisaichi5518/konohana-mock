@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.github.hisaichi5518.konohana.annotation.Store;
-import com.github.hisaichi5518.konohana.annotation.TypeAdapter;
 import com.squareup.javapoet.TypeName;
 
 import java.util.stream.Stream;
@@ -58,12 +57,7 @@ public class ProcessingContext {
 
     @Nullable
     TypeAdapterDefinition getTypeAdapterDefinition(@NonNull TypeName typeName) {
-        Stream<TypeAdapterDefinition> typeAdapterDefinitionStream = roundEnv.getElementsAnnotatedWith(TypeAdapter.class)
-                .stream()
-                .filter(element -> element.getKind() == ElementKind.CLASS)
-                .map(element -> TypeAdapterDefinition.create((TypeElement) element));
-
-        return Stream.concat(typeAdapterDefinitionStream, Stream.of(TypeAdapterDefinition.BUILD_IN))
+        return Stream.of(TypeAdapterDefinition.BUILD_IN)
                 .filter(typeAdapterDefinition -> typeAdapterDefinition.match(typeName))
                 .findFirst()
                 .orElse(null);
