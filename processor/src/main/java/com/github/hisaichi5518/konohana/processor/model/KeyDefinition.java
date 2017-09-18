@@ -3,6 +3,7 @@ package com.github.hisaichi5518.konohana.processor.model;
 import android.support.annotation.NonNull;
 
 import com.github.hisaichi5518.konohana.annotation.Key;
+import com.github.hisaichi5518.konohana.processor.exception.ProcessingException;
 import com.squareup.javapoet.TypeName;
 
 import javax.lang.model.element.VariableElement;
@@ -61,13 +62,10 @@ class KeyDefinition {
         PrefsAdapterDefinition definition = context.getPrefsAdapterDefinition(getFieldClassName());
         if (definition == null) {
             // Can not find available PrefsAdapter for admin field(type: Boolean) of User class
-            // TODO: Pass element
-            throw new RuntimeException(
+            throw new ProcessingException(
                     "Can not find available PrefsAdapter for "
                             + element.getSimpleName() + " field(type: " + getFieldClassName().toString() + ")"
-                            + " of " + element.getEnclosingElement().getSimpleName() + " class.");
-
-
+                            + " of " + element.getEnclosingElement().getSimpleName() + " class.", element);
         }
 
         return definition.getPrefsAdapter();
