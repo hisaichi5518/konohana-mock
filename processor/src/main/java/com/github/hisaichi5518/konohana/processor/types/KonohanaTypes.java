@@ -6,7 +6,7 @@ public class KonohanaTypes {
 
     private static final String PACKAGE = "com.github.hisaichi5518.konohana";
 
-    private static final String TYPE_ADAPTER_PACKAGE = PACKAGE + ".typeadapter";
+    private static final String TYPE_ADAPTER_PACKAGE = PACKAGE + ".prefsadapter";
 
     public static final ClassName IntegerPrefsAdapter = ClassName.get(TYPE_ADAPTER_PACKAGE, "IntegerPrefsAdapter");
 
