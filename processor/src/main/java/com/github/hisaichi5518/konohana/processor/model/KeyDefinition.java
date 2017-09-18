@@ -27,6 +27,11 @@ class KeyDefinition {
         fieldTypeName = TypeName.get(element.asType());
         capitalizedName = upperFirst(element.getSimpleName().toString());
         prefsAdapterTypeName = _getPrefsAdapterTypeName();
+
+        // Validation
+        if (fieldTypeName.isBoxedPrimitive()) {
+            throw new ProcessingException("Cannot use boxed primitive type!", element);
+        }
     }
 
     @NonNull
