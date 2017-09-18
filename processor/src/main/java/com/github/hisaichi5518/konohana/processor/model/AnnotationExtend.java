@@ -24,7 +24,10 @@ class AnnotationExtend {
 
     @Nullable
     static TypeMirror getValue(Element element, Class<? extends Annotation> annotationType, String argName) {
-        AnnotationMirror am = MoreElements.getAnnotationMirror(element, annotationType).get();
+        AnnotationMirror am = MoreElements.getAnnotationMirror(element, annotationType).orNull();
+        if (am == null) {
+            return null;
+        }
         AnnotationValue av = AnnotationMirrors.getAnnotationValue(am, argName);
         return TO_TYPE.visit(av);
     }
