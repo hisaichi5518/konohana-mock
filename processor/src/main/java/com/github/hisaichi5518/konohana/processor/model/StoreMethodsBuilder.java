@@ -121,11 +121,14 @@ public class StoreMethodsBuilder {
     @NonNull
     private MethodSpec buildGetterWithDefaultSpec(@NonNull KeyDefinition keyDefinition) {
 
+        // TODO: throw ProcessingException if defaultValue is null
+
         MethodSpec.Builder builder = MethodSpec.methodBuilder(keyDefinition.getGetterName())
                 .returns(keyDefinition.getFieldClassName())
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Annotations.NonNull)
-                .addStatement("return $T.get(prefs, $S, $L)", keyDefinition.getPrefsAdapterTypeName(), keyDefinition.getPrefsKeyName(), keyDefinition.getDefaultValue());
+                .addStatement("return $T.get(prefs, $S, $L)",
+                        keyDefinition.getPrefsAdapterTypeName(), keyDefinition.getPrefsKeyName(), keyDefinition.getFieldName());
 
         return builder.build();
     }
