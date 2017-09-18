@@ -6,6 +6,8 @@ import com.github.hisaichi5518.konohana.annotation.Key;
 import com.github.hisaichi5518.konohana.annotation.Store;
 import com.squareup.javapoet.ClassName;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.lang.model.element.TypeElement;
@@ -15,24 +17,45 @@ public class StoreDefinition {
     public final ProcessingContext context;
     public final TypeElement element;
 
+    private final ClassName interfaceName;
+    private final String packageName;
+    private final ClassName storeClassName;
+    private final Store store;
+    private final List<KeyDefinition> keys;
+
     StoreDefinition(@NonNull ProcessingContext context, @NonNull TypeElement element) {
         this.context = context;
         this.element = element;
+
+        interfaceName = ClassName.get(element);
+        packageName = interfaceName.packageName();
+        storeClassName = ClassName.get(interfaceName.packageName(), interfaceName.simpleName() + "_Store");
+
+        store = element.getAnnotation(Store.class);
+
+        keys = element.getEnclosedElements()
+                .stream()
+                .filter(e -> e.getAnnotation(Key.class) != null)
+                .map(e -> new KeyDefinition(context, (VariableElement) e)).collect(Collectors.toList());
     }
 
     @NonNull
     public ClassName getInterfaceName() {
-        return ClassName.get(element);
+        return interfaceName;
     }
 
     @NonNull
     String getPackageName() {
-        return getInterfaceName().packageName();
+        return packageName;
+    }
+
+    @NonNull
+    public ClassName getStoreClassName() {
+        return storeClassName;
     }
 
     @NonNull
     public String getPrefsFileName() {
-        Store store = element.getAnnotation(Store.class);
         if (store.name().isEmpty()) {
             return element.getSimpleName().toString();
         }
@@ -41,7 +64,6 @@ public class StoreDefinition {
     }
 
     public int getPrefsMode() {
-        Store store = element.getAnnotation(Store.class);
         if (store.mode() < 0) {
             throw new RuntimeException("Invalid model!");
         }
@@ -50,15 +72,7 @@ public class StoreDefinition {
     }
 
     @NonNull
-    public ClassName getStoreClassName() {
-        return ClassName.get(getInterfaceName().packageName(), getInterfaceName().simpleName() + "_Store");
-    }
-
-    @NonNull
     Stream<KeyDefinition> keyDefinitionStream() {
-        return element.getEnclosedElements()
-                .stream()
-                .filter(element -> element.getAnnotation(Key.class) != null)
-                .map(element -> new KeyDefinition(context, (VariableElement) element));
+        return keys.stream();
     }
 }
