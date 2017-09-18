@@ -4,8 +4,8 @@ import android.support.annotation.NonNull;
 
 import com.github.hisaichi5518.konohana.processor.types.AndroidTypes;
 import com.github.hisaichi5518.konohana.processor.types.Annotations;
+import com.github.hisaichi5518.konohana.processor.types.JavaTypes;
 import com.github.hisaichi5518.konohana.processor.types.RxJavaTypes;
-import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -27,26 +27,19 @@ public class StoreMethodsBuilder {
     public List<MethodSpec> build() {
         List<MethodSpec> methods = new ArrayList<>();
 
-        CodeBlock.Builder codeBlockBuilder = CodeBlock.builder()
-                .addStatement("$T entity = new $T()", storeDefinition.getClassName(), storeDefinition.getClassName());
-
-        storeDefinition.keyDefinitionStream().forEach(
-                keyDefinition -> codeBlockBuilder.addStatement("entity.$L = $L()", keyDefinition.getFieldName(), keyDefinition.getGetterName()));
-        codeBlockBuilder.addStatement("emitter.onNext(entity)");
-
         // Create changes method
         //@formatter:off
         methods.add(MethodSpec.methodBuilder("changes")
                 .addAnnotation(Annotations.NonNull)
                 .addModifiers(Modifier.PUBLIC)
-                .returns(ParameterizedTypeName.get(RxJavaTypes.Observable, storeDefinition.getClassName()))
-                .beginControlFlow("return $T.create(new $T<$T>()", RxJavaTypes.Observable, RxJavaTypes.ObservableOnSubscribe, storeDefinition.getClassName())
+                .returns(ParameterizedTypeName.get(RxJavaTypes.Observable, JavaTypes.String))
+                .beginControlFlow("return $T.create(new $T<$T>()", RxJavaTypes.Observable, RxJavaTypes.ObservableOnSubscribe, JavaTypes.String)
                     .addCode("@$T\n", Override.class)
-                    .beginControlFlow("public void subscribe(final $T<$T> emitter) throws $T", RxJavaTypes.ObservableEmitter, storeDefinition.getClassName(), Exception.class)
+                    .beginControlFlow("public void subscribe(final $T<$T> emitter) throws $T", RxJavaTypes.ObservableEmitter, JavaTypes.String, Exception.class)
                         .beginControlFlow("final $T listener = new $T()", AndroidTypes.OnSharedPreferenceChangeListener, AndroidTypes.OnSharedPreferenceChangeListener)
                             .addCode("@$T\n", Override.class)
-                            .beginControlFlow("public void onSharedPreferenceChanged($T preferences, $T key)", AndroidTypes.SharedPreferences, String.class)
-                            .addCode(codeBlockBuilder.build())
+                            .beginControlFlow("public void onSharedPreferenceChanged($T preferences, $T key)", AndroidTypes.SharedPreferences, JavaTypes.String)
+                            .addStatement("emitter.onNext(key)")
                             .endControlFlow()
                         .endControlFlow("")
                         .beginControlFlow("emitter.setCancellable(new $T()", RxJavaTypes.Cancellable)
