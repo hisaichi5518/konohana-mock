@@ -132,7 +132,7 @@ public class StoreMethodsBuilder {
                 .returns(keyDefinition.getFieldClassName())
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Annotations.NonNull)
-                .addStatement("return $T.get(prefs, $S)", keyDefinition.getPrefsAdapterTypeName(), keyDefinition.getPrefsKeyName());
+                .addStatement("return $T.get(prefs, $S, $L)", keyDefinition.getPrefsAdapterTypeName(), keyDefinition.getPrefsKeyName(), keyDefinition.getDefaultValue());
 
         return builder.build();
     }

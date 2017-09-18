@@ -33,14 +33,4 @@ public class FloatPrefsAdapterTest {
 
         assertThat(FloatPrefsAdapter.get(prefs, "key", 0F)).isEqualTo(1F);
     }
-
-    @Test
-    public void get_WithoutDefault() throws Exception {
-        assertThat(FloatPrefsAdapter.get(prefs, "key")).isEqualTo(0F);
-
-        FloatPrefsAdapter.set(prefs, "key", 1F);
-
-        assertThat(FloatPrefsAdapter.get(prefs, "key")).isEqualTo(1F);
-    }
-
 }

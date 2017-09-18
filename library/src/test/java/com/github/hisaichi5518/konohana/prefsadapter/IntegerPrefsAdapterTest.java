@@ -34,14 +34,4 @@ public class IntegerPrefsAdapterTest {
 
         assertThat(IntegerPrefsAdapter.get(prefs, "key", 0)).isEqualTo(1);
     }
-
-    @Test
-    public void get_WithoutDefault() throws Exception {
-        assertThat(IntegerPrefsAdapter.get(prefs, "key")).isEqualTo(0);
-
-        IntegerPrefsAdapter.set(prefs, "key", 1);
-
-        assertThat(IntegerPrefsAdapter.get(prefs, "key")).isEqualTo(1);
-    }
-
 }

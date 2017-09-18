@@ -18,7 +18,6 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 @Config(constants = BuildConfig.class)
 public class BooleanPrefsAdapterTest {
 
-    private BooleanPrefsAdapter adapter;
     private SharedPreferences prefs;
 
     @Before
@@ -33,14 +32,5 @@ public class BooleanPrefsAdapterTest {
         BooleanPrefsAdapter.set(prefs, "key", true);
 
         assertThat(BooleanPrefsAdapter.get(prefs, "key", false)).isTrue();
-    }
-
-    @Test
-    public void get_WithoutDefault() throws Exception {
-        assertThat(BooleanPrefsAdapter.get(prefs, "key")).isFalse();
-
-        BooleanPrefsAdapter.set(prefs, "key", true);
-
-        assertThat(BooleanPrefsAdapter.get(prefs, "key")).isTrue();
     }
 }

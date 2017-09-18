@@ -33,14 +33,4 @@ public class LongPrefsAdapterTest {
 
         assertThat(LongPrefsAdapter.get(prefs, "key", 0L)).isEqualTo(1L);
     }
-
-    @Test
-    public void get_WithoutDefault() throws Exception {
-        assertThat(LongPrefsAdapter.get(prefs, "key")).isEqualTo(0L);
-
-        LongPrefsAdapter.set(prefs, "key", 1L);
-
-        assertThat(LongPrefsAdapter.get(prefs, "key")).isEqualTo(1L);
-    }
-
 }
