@@ -1,9 +1,9 @@
-package com.github.hisaichi5518.konohana.typeadapter;
+package com.github.hisaichi5518.konohana.prefsadapter;
 
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
-public class FloatTypeAdapter {
+public class FloatPrefsAdapter {
     public static float get(SharedPreferences prefs, @NonNull String key) {
         return get(prefs, key, 0F);
     }

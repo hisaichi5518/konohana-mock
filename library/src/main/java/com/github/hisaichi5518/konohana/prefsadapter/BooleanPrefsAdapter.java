@@ -1,9 +1,9 @@
-package com.github.hisaichi5518.konohana.typeadapter;
+package com.github.hisaichi5518.konohana.prefsadapter;
 
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
-public class BooleanTypeAdapter {
+public class BooleanPrefsAdapter {
     public static boolean get(SharedPreferences prefs, @NonNull String key) {
         return get(prefs, key, false);
     }

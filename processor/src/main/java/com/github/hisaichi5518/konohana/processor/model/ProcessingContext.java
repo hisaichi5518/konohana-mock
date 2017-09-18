@@ -56,9 +56,9 @@ public class ProcessingContext {
     }
 
     @Nullable
-    TypeAdapterDefinition getTypeAdapterDefinition(@NonNull TypeName typeName) {
-        return Stream.of(TypeAdapterDefinition.BUILD_IN)
-                .filter(typeAdapterDefinition -> typeAdapterDefinition.match(typeName))
+    PrefsAdapterDefinition getPrefsAdapterDefinition(@NonNull TypeName typeName) {
+        return Stream.of(PrefsAdapterDefinition.BUILD_IN)
+                .filter(prefsAdapterDefinition -> prefsAdapterDefinition.match(typeName))
                 .findFirst()
                 .orElse(null);
     }
