@@ -103,7 +103,7 @@ class KeyDefinition {
         PrefsAdapterDefinition definition;
         if (customPrefsAdapter.equals(KonohanaTypes.UseBuildInPrefsAdapter)) {
             // Use BuildIn PrefsAdapter
-            definition = context.getPrefsAdapterDefinition(getFieldTypeName());
+            definition = PrefsAdapterDefinition.getPrefsAdapterDefinitionFromBuildIn(context, getFieldTypeName());
         } else {
             // Use Custom PrefsAdapter
             definition = new PrefsAdapterDefinition(getFieldTypeName(), customPrefsAdapter);

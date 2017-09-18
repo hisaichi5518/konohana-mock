@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.github.hisaichi5518.konohana.annotation.Store;
-import com.squareup.javapoet.TypeName;
 
 import java.util.stream.Stream;
 
@@ -52,14 +51,6 @@ public class ProcessingContext {
         // FIXME: throw Exception if package is null
         return storeDefinitionStream()
                 .map(StoreDefinition::getPackageName)
-                .findFirst()
-                .orElse(null);
-    }
-
-    @Nullable
-    PrefsAdapterDefinition getPrefsAdapterDefinition(@NonNull TypeName typeName) {
-        return Stream.of(PrefsAdapterDefinition.BUILD_IN)
-                .filter(prefsAdapterDefinition -> prefsAdapterDefinition.match(typeName))
                 .findFirst()
                 .orElse(null);
     }
